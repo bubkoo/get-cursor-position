@@ -1,5 +1,6 @@
 #include <v8.h>
 #include <node.h>
+#include <nan.h>
 #include <stdio.h>
 #include <errno.h>
 
@@ -105,7 +106,7 @@ int current_tty(void)
     } while (fd == -1 && errno == EINTR);
 
     if (fd == -1)
-    	return -1;
+        return -1;
 
     return fd;
 }
@@ -236,11 +237,11 @@ int cursor_position(int *const rowptr, int *const colptr)
 }
 #endif
 
-void Method(const v8::FunctionCallbackInfo<Value>& args) {
-	Isolate* isolate = Isolate::GetCurrent();
-  	HandleScope scope(isolate);
+NAN_METHOD(Method){
+    Isolate* isolate = Isolate::GetCurrent();
+    HandleScope scope(isolate);
 
-	int ret, row, col;
+    int ret, row, col;
 
     ret = 0;
     row = 0;
@@ -252,16 +253,14 @@ void Method(const v8::FunctionCallbackInfo<Value>& args) {
     if (row < 1 || col < 1)
         return;
 
-    Local<Object> pos = Object::New(isolate);
-    pos->Set(String::NewFromUtf8(isolate, "row"), Number::New(isolate, row));
-    pos->Set(String::NewFromUtf8(isolate, "col"), Number::New(isolate, col));
-  	args.GetReturnValue().Set(pos);
+    Local<Object> pos = Nan::New<Object>();
+    Nan::Set(pos, Nan::New("row").ToLocalChecked(), Nan::New(row)).Check();
+    Nan::Set(pos, Nan::New("col").ToLocalChecked(), Nan::New(col)).Check();
+    info.GetReturnValue().Set(pos);
 }
 
-void Init(Handle<Object> exports) {
-  Isolate* isolate = Isolate::GetCurrent();
-  exports->Set(String::NewFromUtf8(isolate, "sync"),
-      FunctionTemplate::New(isolate, Method)->GetFunction());
+NAN_MODULE_INIT(Init){
+    Nan::Export(target, "sync", Method);
 }
 
 NODE_MODULE(hello, Init)

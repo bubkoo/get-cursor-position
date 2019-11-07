@@ -26,5 +26,8 @@
   "bugs": {
     "url": "https://github.com/bubkoo/get-cursor-position/issues"
   },
-  "homepage": "https://github.com/bubkoo/get-cursor-position"
+  "homepage": "https://github.com/bubkoo/get-cursor-position",
+  "dependencies": {
+    "nan": "^2.14.0"
+  }
 }
