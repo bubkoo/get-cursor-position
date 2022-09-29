@@ -1,8 +1,0 @@
-.idea
-.DS_Store
-.editorconfig
-.gitignore
-.npmignore
-npm-debug.log
-/build
-/node_modules

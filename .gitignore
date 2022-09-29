@@ -1,5 +1,9 @@
 .DS_Store
 .idea
+.vscode
+.DS_Store
+.vscode
 npm-debug.log
-/build
-/node_modules
+yarn-error.log
+node_modules
+build
