@@ -1,8 +1,8 @@
-var pos  = require('./build/Release/pos');
-var tty  = require('tty');
+var tty = require('tty');
+var pos = require('bindings')('pos');
 var code = '\x1b[6n';
 
-function raw(mode) {
+function setRawMode(mode) {
   if (process.stdin.setRawMode) {
     process.stdin.setRawMode(mode)
   } else {
@@ -12,7 +12,7 @@ function raw(mode) {
 
 pos.async = function (callback, context) {
   if (process.platform === 'win32') {
-    process.nextTick(function() {
+    process.nextTick(function () {
       var position = pos.sync();
 
       if (position) {
@@ -28,7 +28,7 @@ pos.async = function (callback, context) {
 
   // start listening
   process.stdin.resume();
-  raw(true);
+  setRawMode(true);
 
   process.stdin.once('data', function (b) {
     var match = /\[(\d+)\;(\d+)R$/.exec(b.toString());
@@ -42,7 +42,7 @@ pos.async = function (callback, context) {
     }
 
     // cleanup and close stdin
-    raw(false);
+    setRawMode(false);
     process.stdin.pause();
   });
 

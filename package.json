@@ -1,6 +1,6 @@
 {
   "name": "get-cursor-position",
-  "version": "1.0.5",
+  "version": "2.0.0",
   "description": "Get the cursor's current position in your terminal.",
   "main": "index.js",
   "scripts": {
@@ -19,6 +19,10 @@
     "email": "bubkoo.wy@gmail.com"
   },
   "license": "MIT",
+  "dependencies": {
+    "bindings": "^1.5.0",
+    "node-addon-api": "^5.0.0"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/bubkoo/get-cursor-position.git"
@@ -26,5 +30,9 @@
   "bugs": {
     "url": "https://github.com/bubkoo/get-cursor-position/issues"
   },
-  "homepage": "https://github.com/bubkoo/get-cursor-position"
+  "homepage": "https://github.com/bubkoo/get-cursor-position",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  }
 }
